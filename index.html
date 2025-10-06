@@ -51,6 +51,12 @@
       .metrics { position: absolute; bottom: 8px; left: 8px; right: 8px; display:flex; gap:8px; padding:6px 10px; border-radius:6px; background: rgba(0,0,0,0.35); font-size: 12px; }
       .legend { display:flex; gap:8px; align-items:center; }
       .legend .swatch { width: 8px; height: 8px; border-radius: 2px; display:inline-block; }
+      .inputs-panel { position: fixed; left: 0; right: 0; bottom: 0; height: 220px; background: rgba(10,13,18,0.97); border-top: 1px solid #1a202a; box-shadow: 0 -8px 16px rgba(0,0,0,0.3); padding: 8px 12px; box-sizing: border-box; }
+      .inputs-header { display:flex; align-items:center; gap:8px; margin-bottom: 8px; }
+      .inputs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; height: calc(100% - 36px); overflow: auto; }
+      .input-card { display:flex; gap:8px; align-items:center; padding:6px; border:1px solid #2a3545; background:#111722; border-radius:6px; }
+      .input-card img { width: 120px; height: 90px; object-fit: cover; border-radius:4px; }
+      .input-meta { font-size: 12px; color:#a9b4c3; }
     </style>
   </head>
   <body>
@@ -59,6 +65,7 @@
       <span class="badge" id="scene-badge">No scene loaded</span>
       <div style="margin-left:auto; display:flex; gap:8px; align-items:center;">
         <button class="button" id="btn-load-demo">Load Demo Scene</button>
+        <button class="button" id="btn-toggle-inputs" aria-pressed="false">Inputs</button>
         <label style="display:flex; gap:6px; align-items:center;">
           <span>Wireframe</span>
           <input type="checkbox" id="toggle-wireframe" />
@@ -70,7 +77,13 @@
       </div>
     </div>
     <div id="app" class="grid"></div>
+    <div id="inputs-panel" class="inputs-panel" hidden>
+      <div class="inputs-header">
+        <strong>Inputs</strong>
+        <span id="inputs-count" class="badge">0</span>
+      </div>
+      <div id="inputs-grid" class="inputs-grid"></div>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
   </html>
-

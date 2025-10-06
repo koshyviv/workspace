@@ -53,3 +53,9 @@ Notes
 - For a “modern splat” track (3D-GRT/GUT), extend the NeRF proxy pattern: render server-side with your backend and stream frames.
  - The demo scene references generated assets. You can replace them with your own outputs when ready.
  - Gaussian Splats pane includes a working fallback point renderer (approximate) when a 3DGS PLY is not provided. Drop a 3DGS-format PLY at `/assets/demo_splats.ply` and set it in `scene.json` to use true splats.
+Docker
+- Build and run both services:
+  - `docker compose build`
+  - `docker compose up`
+- Open `http://localhost:8080` → Load Demo Scene
+- NeRF proxy is exposed at `http://localhost:7007`

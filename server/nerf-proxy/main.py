@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Response, Query
+from fastapi import FastAPI, Response, Query, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import numpy as np
@@ -331,5 +331,25 @@ def render(
 def _on_start():
     # Create small demo dataset and publish assets
     ensure_demo_dataset()
+
+
+@app.get("/inputs")
+def list_inputs():
+    cams = DEMO["cameras"]
+    return {"count": len(cams), "cameras": cams}
+
+
+@app.get("/inputs/image/{idx}")
+def get_input_image(idx: int, w: int | None = None, h: int | None = None):
+    if not DEMO["images"]:
+        raise HTTPException(404, "No demo images")
+    if idx < 0 or idx >= len(DEMO["images"]):
+        raise HTTPException(404, "Index out of range")
+    pil = DEMO["images"][idx]
+    if w and h:
+        pil = pil.resize((int(w), int(h)), Image.BICUBIC)
+    buf = io.BytesIO()
+    pil.save(buf, format="PNG")
+    return Response(content=buf.getvalue(), media_type="image/png")
 
 # Run: uvicorn main:app --host 0.0.0.0 --port 7007

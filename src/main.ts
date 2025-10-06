@@ -4,6 +4,7 @@ import { SplatsPane } from './lib/panes/SplatsPane'
 import { NerfPane } from './lib/panes/NerfPane'
 import type { SceneConfig } from './types'
 import { cameraBus } from './lib/sync/CameraBus'
+import { InputsPanel } from './lib/InputsPanel'
 
 type PaneDef = { id: string; title: string; ctor: any }
 
@@ -16,6 +17,7 @@ const panes: PaneDef[] = [
 
 const app = document.getElementById('app')!
 const viewports: any[] = []
+const inputsPanel = new InputsPanel()
 
 function createPane(def: PaneDef) {
   const paneEl = document.createElement('div')
@@ -45,6 +47,8 @@ async function loadScene(scene: SceneConfig) {
   for (const vp of viewports) vp.attachScene(scene)
   // Initialize camera from scene
   if (scene.initialCamera) cameraBus.emit(scene.initialCamera, 'scene')
+  // Load inputs panel
+  await inputsPanel.load(scene)
 }
 
 // Bootstrap UI
@@ -67,3 +71,9 @@ document.getElementById('btn-load-demo')!.addEventListener('click', async () => 
   loadScene(scene)
 })
 
+document.getElementById('btn-toggle-inputs')!.addEventListener('click', (e) => {
+  const btn = e.currentTarget as HTMLButtonElement
+  const isPressed = btn.getAttribute('aria-pressed') === 'true'
+  inputsPanel.toggle()
+  btn.setAttribute('aria-pressed', String(!isPressed))
+})
