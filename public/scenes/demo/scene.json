@@ -1,0 +1,21 @@
+{
+  "name": "Demo Room",
+  "nerf": {
+    "serverUrl": "http://localhost:7007"
+  },
+  "pointCloud": {
+    "ply": ""
+  },
+  "mesh": {
+    "gltf": ""
+  },
+  "splats": {
+    "ply": ""
+  },
+  "initialCamera": {
+    "position": [2.2, 1.3, 2.4],
+    "target": [0.0, 0.7, 0.0],
+    "up": [0,1,0],
+    "fov": 60
+  }
+}

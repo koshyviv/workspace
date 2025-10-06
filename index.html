@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reconstruction Showdown</title>
+    <style>
+      html, body, #app { height: 100%; margin: 0; }
+      body { background: #0b0e12; color: #e6e6e6; font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 8px;
+        height: calc(100% - 56px);
+        padding: 8px;
+        box-sizing: border-box;
+      }
+      .pane {
+        position: relative;
+        background: #141a22;
+        border: 1px solid #222a35;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .pane-header {
+        position: absolute;
+        top: 8px; left: 8px; right: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 8px 10px;
+        border-radius: 6px;
+        background: rgba(0,0,0,0.35);
+        font-size: 12px;
+      }
+      .toolbar {
+        height: 56px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 8px 12px;
+        border-bottom: 1px solid #1a202a;
+        background: #0e131a;
+        box-sizing: border-box;
+      }
+      .badge { padding: 2px 8px; border-radius: 999px; background: #22344a; color: #9cc3ff; }
+      .button { cursor: pointer; border: 1px solid #2a3545; background: #1a2330; color: #d0d8e2; border-radius: 6px; padding: 6px 10px; }
+      .button[aria-pressed="true"] { background: #19304a; border-color: #2d4a73; }
+      .metrics { position: absolute; bottom: 8px; left: 8px; right: 8px; display:flex; gap:8px; padding:6px 10px; border-radius:6px; background: rgba(0,0,0,0.35); font-size: 12px; }
+      .legend { display:flex; gap:8px; align-items:center; }
+      .legend .swatch { width: 8px; height: 8px; border-radius: 2px; display:inline-block; }
+    </style>
+  </head>
+  <body>
+    <div class="toolbar">
+      <strong>Reconstruction Showdown</strong>
+      <span class="badge" id="scene-badge">No scene loaded</span>
+      <div style="margin-left:auto; display:flex; gap:8px; align-items:center;">
+        <button class="button" id="btn-load-demo">Load Demo Scene</button>
+        <label style="display:flex; gap:6px; align-items:center;">
+          <span>Wireframe</span>
+          <input type="checkbox" id="toggle-wireframe" />
+        </label>
+        <label style="display:flex; gap:6px; align-items:center;">
+          <span>BG</span>
+          <input type="color" id="bg-color" value="#0b0e12" />
+        </label>
+      </div>
+    </div>
+    <div id="app" class="grid"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+  </html>
+
