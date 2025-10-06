@@ -4,10 +4,10 @@
     "serverUrl": "http://localhost:7007"
   },
   "pointCloud": {
-    "ply": ""
+    "ply": "/assets/demo_cloud.ply"
   },
   "mesh": {
-    "gltf": ""
+    "gltf": "/assets/demo_mesh.glb"
   },
   "splats": {
     "ply": ""

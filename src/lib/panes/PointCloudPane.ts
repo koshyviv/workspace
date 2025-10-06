@@ -22,9 +22,35 @@ export class PointCloudPane extends ThreeViewport {
           this.frameToObject(pts)
         },
         undefined,
-        () => this.spawnDemoCloud()
+        () => this.loadDemoCloud()
       )
     } else {
+      this.loadDemoCloud()
+    }
+  }
+
+  private async loadDemoCloud() {
+    // Try to load generated demo point cloud first
+    try {
+      const { getDemoAssetURL } = await import('../utils/generateDemoAssets')
+      const url = await getDemoAssetURL('pointcloud')
+      const loader = new PLYLoader()
+      loader.load(
+        url,
+        geometry => {
+          geometry.computeBoundingBox()
+          geometry.center()
+          const colorAttr = geometry.getAttribute('color') as THREE.BufferAttribute | undefined
+          this.material = new THREE.PointsMaterial({ size: this.pointSize, vertexColors: !!colorAttr, sizeAttenuation: true })
+          const pts = new THREE.Points(geometry, this.material)
+          this.scene3.add(pts)
+          this.frameToObject(pts)
+        },
+        undefined,
+        () => this.spawnDemoCloud()
+      )
+    } catch (err) {
+      console.error('Failed to load demo point cloud:', err)
       this.spawnDemoCloud()
     }
   }

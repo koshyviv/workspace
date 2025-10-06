@@ -25,12 +25,31 @@ export class MeshPane extends ThreeViewport {
   }
 
   private spawnDemoMesh() {
-      // Demo geometry
-      const geo = new THREE.TorusKnotGeometry(1, 0.3, 220, 50)
-      const mat = new THREE.MeshStandardMaterial({ color: 0x88ffaa, metalness: 0.2, roughness: 0.5 })
+      // Demo geometry - torus knot matching other viewers
+      const geo = new THREE.TorusKnotGeometry(1, 0.5, 100, 20, 2, 3)
+      geo.setAttribute('color', this.generateColorAttribute(geo))
+      const mat = new THREE.MeshStandardMaterial({ 
+        vertexColors: true,
+        metalness: 0.2, 
+        roughness: 0.5 
+      })
       const mesh = new THREE.Mesh(geo, mat)
       this.scene3.add(mesh)
       this.frameToObject(mesh)
+  }
+
+  private generateColorAttribute(geometry: THREE.BufferGeometry): THREE.BufferAttribute {
+    const positions = geometry.getAttribute('position')
+    const colors = new Float32Array(positions.count * 3)
+    for (let i = 0; i < positions.count; i++) {
+      const x = positions.getX(i)
+      const y = positions.getY(i)
+      const z = positions.getZ(i)
+      colors[i * 3] = (x + 1.5) / 3.0
+      colors[i * 3 + 1] = (y + 1.5) / 3.0
+      colors[i * 3 + 2] = (z + 1) / 2.0
+    }
+    return new THREE.BufferAttribute(colors, 3)
   }
 
   setWireframe(enabled: boolean): void {
